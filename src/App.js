@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import CampaignDetails from "./components/campaigndetails"; //Imports Campaign table from campaigndetails.js
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  // Initial State 
+  state = {
+    data: []
+  }
+
+  // Fetch the data from server 
+  componentDidMount() {
+    fetch('http://www.json-generator.com/api/json/get/cgBRzDWhSG?indent=2')
+      .then(response => response.json())
+      .then(data => this.setState({
+        data
+      }))
+  }
+
+  render() {
+    return (
+      <div className="tab_wrapper">
+        <span className="w1">Manage</span> <span className="w2"> Campaigns</span>
+        <CampaignDetails details={this.state.data} />
+      </div>
+    );
+  }
 }
 
 export default App;
